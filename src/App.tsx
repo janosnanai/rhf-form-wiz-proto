@@ -4,6 +4,9 @@ import {
   Paper,
   Portal,
   Stack,
+  Step,
+  StepButton,
+  Stepper,
   TextField,
   Typography,
 } from "@mui/material";
@@ -18,6 +21,7 @@ import { useState } from "react";
 function App() {
   const [wizStage, setWizStage] = useState(0);
   const formMethods = useForm();
+  const steps = ["form 1", "form 2", "summary"];
 
   function handleBack() {
     if (wizStage === 0) return;
@@ -29,12 +33,26 @@ function App() {
     setWizStage((prev) => prev + 1);
   }
 
+  function handleStep(update: number) {
+    if (update === wizStage) return;
+    setWizStage(update);
+  }
+
   return (
     <>
       <Portal>
         <DevTool control={formMethods.control} />
       </Portal>
       <Paper sx={{ m: "5rem auto", my: 5, p: 3, width: 500 }}>
+        <Box>
+          <Stepper nonLinear activeStep={wizStage}>
+            {steps.map((label, idx) => (
+              <Step>
+                <StepButton onClick={() => handleStep(idx)}>{label}</StepButton>
+              </Step>
+            ))}
+          </Stepper>
+        </Box>
         <Box
           sx={{
             display: "flex",
