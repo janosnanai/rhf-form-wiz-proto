@@ -7,7 +7,6 @@ import {
   Step,
   StepButton,
   Stepper,
-  TextField,
   Typography,
 } from "@mui/material";
 import {
@@ -15,13 +14,17 @@ import {
   NavigateNext as NextIcon,
 } from "@mui/icons-material";
 import { DevTool } from "@hookform/devtools";
-import { useForm, useFormContext, FormProvider } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
+
+import NameForm from "./components/forms/name-form";
+import ContactForm from "./components/forms/contact-form";
+import Summary from "./components/forms/summary";
 
 function App() {
   const [wizStage, setWizStage] = useState(0);
   const formMethods = useForm();
-  const steps = ["form 1", "form 2", "summary"];
+  const steps = ["name", "contact", "summary"];
 
   function handleBack() {
     if (wizStage === 0) return;
@@ -70,8 +73,8 @@ function App() {
               <Typography variant="h2" sx={{ textAlign: "center", mb: 3 }}>
                 {steps[wizStage]}
               </Typography>
-              {wizStage === 0 && <Form1 />}
-              {wizStage === 1 && <Form2 />}
+              {wizStage === 0 && <NameForm />}
+              {wizStage === 1 && <ContactForm />}
               {wizStage === 2 && <Summary />}
             </Stack>
 
@@ -86,44 +89,3 @@ function App() {
 }
 
 export default App;
-
-function Form1() {
-  const { register } = useFormContext();
-
-  return (
-    <>
-      <TextField label="field A in form-1" {...register("form1.A")} />
-      <TextField label="field B in form-1" {...register("form1.B")} />
-    </>
-  );
-}
-
-function Form2() {
-  const { register } = useFormContext();
-
-  return (
-    <>
-      <TextField label="field A in form-2" {...register("form2.A")} />
-      <TextField label="field B in form-2" {...register("form2.B")} />
-    </>
-  );
-}
-
-function Summary() {
-  const { getValues, handleSubmit } = useFormContext();
-
-  return (
-    <>
-      <p>{JSON.stringify(getValues())}</p>
-      <Button
-        onClick={handleSubmit((formData) => {
-          console.log(formData);
-          alert(JSON.stringify(formData));
-        })}
-        variant="contained"
-      >
-        submit
-      </Button>
-    </>
-  );
-}
