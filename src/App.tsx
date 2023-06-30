@@ -66,9 +66,14 @@ function App() {
               <BackIcon /> back
             </Button>
 
-            {wizStage === 0 && <Form1 />}
-            {wizStage === 1 && <Form2 />}
-            {wizStage === 2 && <Summary />}
+            <Stack gap={3}>
+              <Typography variant="h2" sx={{ textAlign: "center", mb: 3 }}>
+                {steps[wizStage]}
+              </Typography>
+              {wizStage === 0 && <Form1 />}
+              {wizStage === 1 && <Form2 />}
+              {wizStage === 2 && <Summary />}
+            </Stack>
 
             <Button disabled={wizStage === 2} onClick={handleNext}>
               next <NextIcon />
@@ -86,13 +91,10 @@ function Form1() {
   const { register } = useFormContext();
 
   return (
-    <Stack gap={3}>
-      <Typography variant="h2" sx={{ textAlign: "center", mb: 3 }}>
-        form 1
-      </Typography>
+    <>
       <TextField label="field A in form-1" {...register("form1.A")} />
       <TextField label="field B in form-1" {...register("form1.B")} />
-    </Stack>
+    </>
   );
 }
 
@@ -100,13 +102,10 @@ function Form2() {
   const { register } = useFormContext();
 
   return (
-    <Stack gap={3}>
-      <Typography variant="h2" sx={{ textAlign: "center", mb: 3 }}>
-        form 2
-      </Typography>
+    <>
       <TextField label="field A in form-2" {...register("form2.A")} />
       <TextField label="field B in form-2" {...register("form2.B")} />
-    </Stack>
+    </>
   );
 }
 
@@ -114,10 +113,7 @@ function Summary() {
   const { getValues, handleSubmit } = useFormContext();
 
   return (
-    <Stack gap={3}>
-      <Typography variant="h2" sx={{ textAlign: "center", mb: 3 }}>
-        Summary
-      </Typography>
+    <>
       <p>{JSON.stringify(getValues())}</p>
       <Button
         onClick={handleSubmit((formData) => {
@@ -128,6 +124,6 @@ function Summary() {
       >
         submit
       </Button>
-    </Stack>
+    </>
   );
 }
