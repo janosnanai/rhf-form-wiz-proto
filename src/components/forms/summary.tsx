@@ -3,10 +3,14 @@ import { useFormContext } from "react-hook-form";
 
 function Summary() {
   const { getValues, handleSubmit } = useFormContext();
-
+  const fields = getValues();
   return (
     <>
-      <p>{JSON.stringify(getValues())}</p>
+      {Object.entries(fields).map(([k, v]) => (
+        <p key={k}>
+          <strong>{k}</strong>: {v}
+        </p>
+      ))}
       <Button
         onClick={handleSubmit((formData) => {
           console.log(formData);

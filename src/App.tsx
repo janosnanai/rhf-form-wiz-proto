@@ -17,8 +17,8 @@ import { DevTool } from "@hookform/devtools";
 import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
 
-import NameForm from "./components/forms/name-form";
-import ContactForm from "./components/forms/contact-form";
+import NameForm from "./components/forms/name-form/name-form";
+import ContactForm from "./components/forms/contact-form/contact-form";
 import Summary from "./components/forms/summary";
 
 function App() {
@@ -50,7 +50,7 @@ function App() {
         <Box>
           <Stepper nonLinear activeStep={wizStage}>
             {steps.map((label, idx) => (
-              <Step>
+              <Step key={label}>
                 <StepButton onClick={() => handleStep(idx)}>{label}</StepButton>
               </Step>
             ))}
