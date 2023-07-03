@@ -14,16 +14,18 @@ import {
   NavigateNext as NextIcon,
 } from "@mui/icons-material";
 import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
 
 import NameForm from "../../components/forms/name-form";
 import ContactForm from "../../components/forms/contact-form";
 import Summary from "../../components/forms/summary";
+import { userSchema, type UserInput } from "./schema/user-schema";
 
 function UserWiz() {
   const [wizStage, setWizStage] = useState(0);
-  const formMethods = useForm();
+  const formMethods = useForm<UserInput>({ resolver: zodResolver(userSchema) });
   const steps = ["name", "contact", "summary"];
 
   function handleBack() {
