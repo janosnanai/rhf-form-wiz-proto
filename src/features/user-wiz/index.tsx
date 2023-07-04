@@ -69,48 +69,64 @@ function UserWiz() {
         <DevTool control={formMethods.control} />
       </Portal>
       <Paper sx={{ m: "5rem auto", my: 5, p: 3, width: 640 }}>
-        <Box>
-          <Stepper nonLinear activeStep={wizStage}>
-            {steps.map((label, idx) => (
-              <Step key={label}>
-                <StepButton onClick={() => handleStep(idx)}>{label}</StepButton>
-              </Step>
-            ))}
-          </Stepper>
-        </Box>
         <FormProvider {...formMethods}>
           <Box
             sx={{
               display: "flex",
-              gap: 3,
-              justifyContent: "space-between",
+              gap: 7,
               mt: 3,
             }}
           >
-            <Button disabled={wizStage === 0} onClick={handleBack}>
-              <BackIcon /> back
-            </Button>
+            <Box>
+              <Stepper nonLinear activeStep={wizStage} orientation="vertical">
+                {steps.map((label, idx) => (
+                  <Step key={label}>
+                    <StepButton onClick={() => handleStep(idx)}>
+                      {label}
+                    </StepButton>
+                  </Step>
+                ))}
+              </Stepper>
+            </Box>
 
-            <Stack gap={3}>
-              <Typography variant="h2" sx={{ textAlign: "center", mb: 3 }}>
+            <Box flexGrow={1}>
+              <Typography variant="h3" component="h2" sx={{ mb: 3 }}>
                 {steps[wizStage]}
               </Typography>
-              {wizStage === 0 && <NameForm />}
-              {wizStage === 1 && <ContactForm />}
-              {wizStage === 2 && <NotificationForm />}
+              {wizStage === 0 && (
+                <Stack gap={3}>
+                  <NameForm />
+                </Stack>
+              )}
+              {wizStage === 1 && (
+                <Stack gap={3}>
+                  <ContactForm />
+                </Stack>
+              )}
+              {wizStage === 2 && (
+                <Stack gap={3}>
+                  <NotificationForm />
+                </Stack>
+              )}
               {wizStage === 3 && <Summary />}
-            </Stack>
-
-            <Button disabled={wizStage === 3} onClick={handleNext}>
-              next <NextIcon />
-            </Button>
-          </Box>
-          <Box sx={{ mt: 3 }}>
-            <Button onClick={handleReset}>reset form</Button>
-            <Button onClick={handleSubmit}>submit</Button>
+              <Box
+                sx={{ display: "flex", justifyContent: "space-between", mt: 3 }}
+              >
+                <Button disabled={wizStage === 0} onClick={handleBack}>
+                  <BackIcon /> back
+                </Button>
+                <Button disabled={wizStage === 3} onClick={handleNext}>
+                  next <NextIcon />
+                </Button>
+              </Box>
+            </Box>
           </Box>
         </FormProvider>
       </Paper>
+      <Box sx={{ mt: 3 }}>
+        <Button onClick={handleReset}>reset form</Button>
+        <Button onClick={handleSubmit}>submit</Button>
+      </Box>
       <p>{JSON.stringify(formMethods.formState)}</p>
     </>
   );
