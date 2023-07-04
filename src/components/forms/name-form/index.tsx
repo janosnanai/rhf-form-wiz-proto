@@ -1,7 +1,7 @@
 // import { TextField } from "@mui/material";
 // import { useFormContext } from "react-hook-form";
 
-import TextInput from "../inputs/text-input";
+import TextInput from "../_inputs/text-input";
 
 function NameForm() {
   // const { register } = useFormContext();

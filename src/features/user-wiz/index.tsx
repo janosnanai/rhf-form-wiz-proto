@@ -20,13 +20,17 @@ import { useState } from "react";
 
 import NameForm from "../../components/forms/name-form";
 import ContactForm from "../../components/forms/contact-form";
+import NotificationForm from "../../components/forms/notification-form";
 import Summary from "../../components/forms/summary";
 import { userSchema, type UserInput } from "./schema/user-schema";
 
 function UserWiz() {
   const [wizStage, setWizStage] = useState(0);
-  const formMethods = useForm<UserInput>({ resolver: zodResolver(userSchema) });
-  const steps = ["name", "contact", "summary"];
+  const formMethods = useForm<UserInput>({
+    resolver: zodResolver(userSchema),
+    mode: "onTouched",
+  });
+  const steps = ["name", "contact", "notifications", "summary"];
 
   function handleBack() {
     if (wizStage === 0) return;
@@ -34,7 +38,7 @@ function UserWiz() {
   }
 
   function handleNext() {
-    if (wizStage === 2) return;
+    if (wizStage === 3) return;
     setWizStage((prev) => prev + 1);
   }
 
@@ -48,7 +52,7 @@ function UserWiz() {
       <Portal>
         <DevTool control={formMethods.control} />
       </Portal>
-      <Paper sx={{ m: "5rem auto", my: 5, p: 3, width: 500 }}>
+      <Paper sx={{ m: "5rem auto", my: 5, p: 3, width: 640 }}>
         <Box>
           <Stepper nonLinear activeStep={wizStage}>
             {steps.map((label, idx) => (
@@ -77,10 +81,11 @@ function UserWiz() {
               </Typography>
               {wizStage === 0 && <NameForm />}
               {wizStage === 1 && <ContactForm />}
-              {wizStage === 2 && <Summary />}
+              {wizStage === 2 && <NotificationForm />}
+              {wizStage === 3 && <Summary />}
             </Stack>
 
-            <Button disabled={wizStage === 2} onClick={handleNext}>
+            <Button disabled={wizStage === 3} onClick={handleNext}>
               next <NextIcon />
             </Button>
           </FormProvider>
