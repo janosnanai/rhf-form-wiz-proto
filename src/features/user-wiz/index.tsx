@@ -22,13 +22,14 @@ import NameForm from "../../components/forms/name-form";
 import ContactForm from "../../components/forms/contact-form";
 import NotificationForm from "../../components/forms/notification-form";
 import Summary from "../../components/forms/summary";
-import { userSchema, type UserInput } from "./schema/user-schema";
+import { userSchema, type UserInput, userDefaults } from "./schema/user-schema";
 
 function UserWiz() {
   const [wizStage, setWizStage] = useState(0);
   const formMethods = useForm<UserInput>({
-    resolver: zodResolver(userSchema),
+    defaultValues: userDefaults,
     mode: "onTouched",
+    resolver: zodResolver(userSchema),
   });
   const steps = ["name", "contact", "notifications", "summary"];
 
@@ -47,6 +48,21 @@ function UserWiz() {
     setWizStage(update);
   }
 
+  function handleReset() {
+    formMethods.reset(userDefaults);
+  }
+
+  function handleSubmit() {
+    console.log("hello");
+
+    formMethods.handleSubmit((formData) => {
+      console.log("submit called");
+
+      console.log(formData);
+      alert(JSON.stringify(formData));
+    })();
+  }
+
   return (
     <>
       <Portal>
@@ -62,15 +78,15 @@ function UserWiz() {
             ))}
           </Stepper>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            gap: 3,
-            justifyContent: "space-between",
-            mt: 3,
-          }}
-        >
-          <FormProvider {...formMethods}>
+        <FormProvider {...formMethods}>
+          <Box
+            sx={{
+              display: "flex",
+              gap: 3,
+              justifyContent: "space-between",
+              mt: 3,
+            }}
+          >
             <Button disabled={wizStage === 0} onClick={handleBack}>
               <BackIcon /> back
             </Button>
@@ -88,9 +104,14 @@ function UserWiz() {
             <Button disabled={wizStage === 3} onClick={handleNext}>
               next <NextIcon />
             </Button>
-          </FormProvider>
-        </Box>
+          </Box>
+          <Box sx={{ mt: 3 }}>
+            <Button onClick={handleReset}>reset form</Button>
+            <Button onClick={handleSubmit}>submit</Button>
+          </Box>
+        </FormProvider>
       </Paper>
+      <p>{JSON.stringify(formMethods.formState)}</p>
     </>
   );
 }

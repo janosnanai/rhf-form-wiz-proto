@@ -6,3 +6,8 @@ export const notificationSchema = z.object({
 });
 
 export type NotificationInput = z.infer<typeof notificationSchema>;
+
+export const notificationDefaults: NotificationInput = {
+  emailNotification: false,
+  smsNotification: false,
+};
