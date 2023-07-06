@@ -10,6 +10,8 @@ import {
   Typography,
 } from "@mui/material";
 import {
+  Check as CheckIcon,
+  ErrorOutline as ErrorIcon,
   NavigateBefore as BackIcon,
   NavigateNext as NextIcon,
 } from "@mui/icons-material";
@@ -19,8 +21,11 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
 
 import NameForm from "../../components/forms/name-form";
+import { validateName } from "../../components/forms/name-form/schema/name-schema";
 import ContactForm from "../../components/forms/contact-form";
+import { validateContact } from "../../components/forms/contact-form/schema/contact-schema";
 import NotificationForm from "../../components/forms/notification-form";
+import { validateNotification } from "../../components/forms/notification-form/schema/notification-schema";
 import Summary from "../../components/forms/summary";
 import { userSchema, type UserInput, userDefaults } from "./schema/user-schema";
 
@@ -31,21 +36,92 @@ function UserWiz() {
     mode: "onTouched",
     resolver: zodResolver(userSchema),
   });
-  const steps = ["name", "contact", "notifications", "summary"];
+
+  interface FormStep {
+    name: string;
+    touched?: boolean;
+    error?: boolean;
+    type: string;
+    validate?: (data: { [k: string]: unknown }) => boolean;
+  }
+
+  const [steps, setSteps] = useState<FormStep[]>([
+    {
+      name: "name",
+      touched: false,
+      error: false,
+      type: "form",
+      validate: validateName,
+    },
+    {
+      name: "contact",
+      touched: false,
+      error: false,
+      type: "form",
+      validate: validateContact,
+    },
+    {
+      name: "notifications",
+      touched: false,
+      error: false,
+      type: "form",
+      validate: validateNotification,
+    },
+    { name: "summary", type: "summary" },
+  ]);
 
   function handleBack() {
     if (wizStage === 0) return;
     setWizStage((prev) => prev - 1);
+    setSteps((prev) =>
+      prev.map((step, idx) => {
+        return idx === wizStage && step.type === "form"
+          ? {
+              ...step,
+              touched: true,
+              error: step.validate
+                ? !step.validate(formMethods.getValues())
+                : false,
+            }
+          : step;
+      })
+    );
   }
 
   function handleNext() {
     if (wizStage === 3) return;
     setWizStage((prev) => prev + 1);
+    setSteps((prev) =>
+      prev.map((step, idx) => {
+        return idx === wizStage && step.type === "form"
+          ? {
+              ...step,
+              touched: true,
+              error: step.validate
+                ? !step.validate(formMethods.getValues())
+                : false,
+            }
+          : step;
+      })
+    );
   }
 
   function handleStep(update: number) {
     if (update === wizStage) return;
     setWizStage(update);
+    setSteps((prev) =>
+      prev.map((step, idx) => {
+        return idx === wizStage && step.type === "form"
+          ? {
+              ...step,
+              touched: true,
+              error: step.validate
+                ? !step.validate(formMethods.getValues())
+                : false,
+            }
+          : step;
+      })
+    );
   }
 
   function handleReset() {
@@ -53,11 +129,7 @@ function UserWiz() {
   }
 
   function handleSubmit() {
-    console.log("hello");
-
     formMethods.handleSubmit((formData) => {
-      console.log("submit called");
-
       console.log(formData);
       alert(JSON.stringify(formData));
     })();
@@ -79,10 +151,11 @@ function UserWiz() {
           >
             <Box>
               <Stepper nonLinear activeStep={wizStage} orientation="vertical">
-                {steps.map((label, idx) => (
-                  <Step key={label}>
+                {steps.map(({ name, touched, error }, idx) => (
+                  <Step key={name}>
                     <StepButton onClick={() => handleStep(idx)}>
-                      {label}
+                      {name}{" "}
+                      {touched && (!error ? <CheckIcon /> : <ErrorIcon />)}
                     </StepButton>
                   </Step>
                 ))}
@@ -91,7 +164,7 @@ function UserWiz() {
 
             <Box flexGrow={1}>
               <Typography variant="h3" component="h2" sx={{ mb: 3 }}>
-                {steps[wizStage]}
+                {steps[wizStage].name}
               </Typography>
               {wizStage === 0 && (
                 <Stack gap={3}>
