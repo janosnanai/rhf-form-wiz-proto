@@ -39,6 +39,7 @@ function UserWiz() {
 
   interface FormStep {
     name: string;
+    nesting?: string[];
     touched?: boolean;
     error?: boolean;
     type: string;
@@ -48,6 +49,7 @@ function UserWiz() {
   const [steps, setSteps] = useState<FormStep[]>([
     {
       name: "name",
+      nesting: ["user", "baseData"],
       touched: false,
       error: false,
       type: "form",
@@ -55,6 +57,7 @@ function UserWiz() {
     },
     {
       name: "contact",
+      nesting: ["user", "baseData"],
       touched: false,
       error: false,
       type: "form",
@@ -62,6 +65,7 @@ function UserWiz() {
     },
     {
       name: "notifications",
+      nesting: ["user", "notificationSettings"],
       touched: false,
       error: false,
       type: "form",
