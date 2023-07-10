@@ -1,16 +1,12 @@
 import TextInput from "../_inputs/text-input";
+import createNestingPrefix from "../../../utils/create-nesting-prefix";
 
 interface ContactFormProps {
   nesting?: string[];
 }
 
 function ContactForm(props: ContactFormProps) {
-  let nestingPrefix = "";
-
-  if (props.nesting) {
-    nestingPrefix =
-      props.nesting.join(".") + (props.nesting.length > 0 ? "" : ".");
-  }
+  const nestingPrefix = createNestingPrefix(props.nesting);
 
   return (
     <>

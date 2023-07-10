@@ -21,13 +21,17 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
 
 import NameForm from "../../components/forms/name-form";
-import { validateName } from "../../components/forms/name-form/schema/name-schema";
+// import { validateName } from "../../components/forms/name-form/schema/name-schema";
 import ContactForm from "../../components/forms/contact-form";
-import { validateContact } from "../../components/forms/contact-form/schema/contact-schema";
+// import { validateContact } from "../../components/forms/contact-form/schema/contact-schema";
 import NotificationForm from "../../components/forms/notification-form";
-import { validateNotification } from "../../components/forms/notification-form/schema/notification-schema";
+// import { validateNotification } from "../../components/forms/notification-form/schema/notification-schema";
 import Summary from "../../components/forms/summary";
 import { userSchema, type UserInput, userDefaults } from "./schema/user-schema";
+import useValidateFormSlice from "../../hooks/use-validate-form-slice";
+import { nameSchema } from "../../components/forms/name-form/schema/name-schema";
+import { contactSchema } from "../../components/forms/contact-form/schema/contact-schema";
+import { notificationSchema } from "../../components/forms/notification-form/schema/notification-schema";
 
 function UserWiz() {
   const [wizStage, setWizStage] = useState(0);
@@ -36,6 +40,16 @@ function UserWiz() {
     mode: "onTouched",
     resolver: zodResolver(userSchema),
   });
+
+  const validateName = useValidateFormSlice(nameSchema, ["user", "baseData"]);
+  const validateContact = useValidateFormSlice(contactSchema, [
+    "user",
+    "baseData",
+  ]);
+  const validateNotification = useValidateFormSlice(notificationSchema, [
+    "user",
+    "notificationSettings",
+  ]);
 
   interface FormStep {
     name: string;
@@ -172,12 +186,12 @@ function UserWiz() {
               </Typography>
               {wizStage === 0 && (
                 <Stack gap={3}>
-                  <NameForm />
+                  <NameForm nesting={["user", "baseData"]} />
                 </Stack>
               )}
               {wizStage === 1 && (
                 <Stack gap={3}>
-                  <ContactForm />
+                  <ContactForm nesting={["user", "baseData"]} />
                 </Stack>
               )}
               {wizStage === 2 && (

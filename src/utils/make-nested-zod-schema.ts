@@ -1,13 +1,11 @@
 import { ZodSchema, z } from "zod";
 
 function makeNestedZodSchema(schema: ZodSchema, nesting?: string[]): ZodSchema {
-  if (!nesting) return schema;
+  if (!nesting || nesting.length === 0) return schema;
 
-  const formattedSchema = z.object({});
+  const newSchema = z.object({ [nesting.pop() as string]: schema });
 
-  for (let i = 0; i < nesting.length; i++) {
-    formattedSchema.setKey(nesting[i], z.object({})); // TODO
-  }
-
-  return formattedSchema;
+  return makeNestedZodSchema(newSchema, nesting);
 }
+
+export default makeNestedZodSchema;
