@@ -11,8 +11,3 @@ export const notificationDefaults: NotificationInput = {
   emailNotification: false,
   smsNotification: false,
 };
-
-export function validateNotification(data: { [k: string]: unknown }) {
-  const isValid = notificationSchema.safeParse(data).success;
-  return isValid;
-}

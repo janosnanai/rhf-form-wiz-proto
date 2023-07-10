@@ -10,12 +10,12 @@ function NotificationForm(props: NotificationFormProps) {
   return (
     <>
       <Switch
-        label={nestingPrefix + "email notifications"}
-        name="emailNotification"
+        name={nestingPrefix + "emailNotification"}
+        label="email notifications"
       />
       <Switch
-        label={nestingPrefix + "SMS notifications"}
-        name="smsNotification"
+        name={nestingPrefix + "smsNotification"}
+        label="SMS notifications"
       />
     </>
   );

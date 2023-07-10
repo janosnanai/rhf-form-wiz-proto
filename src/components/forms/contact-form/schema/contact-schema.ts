@@ -8,8 +8,3 @@ export const contactSchema = z.object({
 export type ContactInput = z.infer<typeof contactSchema>;
 
 export const contactDefaults: ContactInput = { email: null, phone: null };
-
-export function validateContact(data: { [k: string]: unknown }) {
-  const isValid = contactSchema.safeParse(data).success;
-  return isValid;
-}

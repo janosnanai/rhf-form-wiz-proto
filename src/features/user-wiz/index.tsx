@@ -21,11 +21,8 @@ import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
 
 import NameForm from "../../components/forms/name-form";
-// import { validateName } from "../../components/forms/name-form/schema/name-schema";
 import ContactForm from "../../components/forms/contact-form";
-// import { validateContact } from "../../components/forms/contact-form/schema/contact-schema";
 import NotificationForm from "../../components/forms/notification-form";
-// import { validateNotification } from "../../components/forms/notification-form/schema/notification-schema";
 import Summary from "../../components/forms/summary";
 import { userSchema, type UserInput, userDefaults } from "./schema/user-schema";
 import useValidateFormSlice from "../../hooks/use-validate-form-slice";
@@ -196,7 +193,9 @@ function UserWiz() {
               )}
               {wizStage === 2 && (
                 <Stack gap={3}>
-                  <NotificationForm />
+                  <NotificationForm
+                    nesting={["user", "notificationSettings"]}
+                  />
                 </Stack>
               )}
               {wizStage === 3 && <Summary />}

@@ -6,12 +6,6 @@ function Summary() {
   const fields = getValues();
   return (
     <>
-      {/* {Object.entries(fields).map(([k, v]) => (
-        <p key={k}>
-          <strong>{k}</strong>: {v}
-        </p>
-      ))} */}
-
       <p>{JSON.stringify(fields)}</p>
       <Button
         onClick={handleSubmit((formData) => {
