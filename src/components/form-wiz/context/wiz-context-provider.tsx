@@ -36,7 +36,7 @@ function WizContextProvider(props: WizContextProviderProps) {
   }
 
   function stepTo(update: number) {
-    if (update >= maxStep || update < 0) return;
+    if (update > maxStep || update < 0) return;
     setActiveStep(update);
   }
 
