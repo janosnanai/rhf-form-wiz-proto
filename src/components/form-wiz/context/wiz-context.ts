@@ -2,10 +2,13 @@ import type { ZodSchema } from "zod";
 
 import { createContext, useContext } from "react";
 
+interface WizStepComponentProps {
+  nesting?: string[];
+}
 export interface WizStep {
   title: string;
-  // nesting?: string[];
-  component: React.ReactNode;
+  nesting?: string[];
+  component: React.FC<WizStepComponentProps>;
   schema?: ZodSchema;
 }
 

@@ -3,14 +3,10 @@ import { useState } from "react";
 import { WizContext, type WizContextValues, type WizStep } from "./wiz-context";
 import makeNestedZodSchema from "../../../utils/make-nested-zod-schema";
 
-export interface WizStepWithNesting extends WizStep {
-  nesting?: string[];
-}
-
 export interface WizContextProviderProps
   extends Pick<WizContextValues, "onSubmit"> {
   children: React.ReactNode;
-  steps: WizStepWithNesting[];
+  steps: WizStep[];
 }
 
 function WizContextProvider(props: WizContextProviderProps) {
@@ -24,10 +20,9 @@ function WizContextProvider(props: WizContextProviderProps) {
       : undefined;
 
     return {
-      component: step.component,
-      title: step.title,
+      ...step,
       schema: nestedSchema,
-    } as WizStep;
+    };
   });
 
   function back() {

@@ -1,5 +1,5 @@
 import FormWiz from "../../components/form-wiz";
-import { WizStepWithNesting } from "../../components/form-wiz/context/wiz-context-provider";
+import { type WizStep } from "../../components/form-wiz/context/wiz-context";
 import ContactForm from "../../components/forms/form-slices/contact-form";
 import { contactSchema } from "../../components/forms/form-slices/contact-form/schema/contact-schema";
 import NameForm from "../../components/forms/form-slices/name-form";
@@ -9,26 +9,26 @@ import { notificationSchema } from "../../components/forms/form-slices/notificat
 import Summary from "../../components/forms/form-slices/summary";
 import { userDefaults, userSchema, type UserInput } from "./schema/user-schema";
 
-const userWizSteps: WizStepWithNesting[] = [
+const userWizSteps: WizStep[] = [
   {
     title: "name",
     nesting: ["user", "baseData"],
-    component: <NameForm />,
+    component: NameForm,
     schema: nameSchema,
   },
   {
     title: "contact info",
     nesting: ["user", "baseData"],
-    component: <ContactForm />,
+    component: ContactForm,
     schema: contactSchema,
   },
   {
     title: "notificaion settings",
     nesting: ["user", "baseData"],
-    component: <NotificationForm />,
+    component: NotificationForm,
     schema: notificationSchema,
   },
-  { title: "summary", component: <Summary /> },
+  { title: "summary", component: Summary },
 ];
 
 interface UserWizProps {
