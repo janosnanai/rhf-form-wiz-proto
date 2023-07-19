@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React, { useState } from "react";
 import { Box, Modal as MUIModal } from "@mui/material";
 
