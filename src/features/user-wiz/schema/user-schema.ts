@@ -2,15 +2,15 @@ import { z } from "zod";
 import {
   nameSchema,
   nameDefaults,
-} from "../../../components/forms/name-form/schema/name-schema";
+} from "../../../components/forms/form-slices/name-form/schema/name-schema";
 import {
   contactSchema,
   contactDefaults,
-} from "../../../components/forms/contact-form/schema/contact-schema";
+} from "../../../components/forms/form-slices/contact-form/schema/contact-schema";
 import {
   notificationSchema,
   notificationDefaults,
-} from "../../../components/forms/notification-form/schema/notification-schema";
+} from "../../../components/forms/form-slices/notification-form/schema/notification-schema";
 
 // export const userSchema = nameSchema
 //   .merge(contactSchema)

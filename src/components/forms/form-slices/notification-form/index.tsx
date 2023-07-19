@@ -1,5 +1,5 @@
-import Switch from "../_inputs/switch";
-import createNestingPrefix from "../../../utils/create-nesting-prefix";
+import Switch from "../../_inputs/switch";
+import createNestingPrefix from "../../../../utils/create-nesting-prefix";
 interface NotificationFormProps {
   nesting?: string[];
 }

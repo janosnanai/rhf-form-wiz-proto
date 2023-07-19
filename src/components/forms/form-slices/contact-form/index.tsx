@@ -1,5 +1,5 @@
-import TextInput from "../_inputs/text-input";
-import createNestingPrefix from "../../../utils/create-nesting-prefix";
+import TextInput from "../../_inputs/text-input";
+import createNestingPrefix from "../../../../utils/create-nesting-prefix";
 
 interface ContactFormProps {
   nesting?: string[];

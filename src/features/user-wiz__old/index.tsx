@@ -20,15 +20,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, FormProvider } from "react-hook-form";
 import { useState } from "react";
 
-import NameForm from "../../components/forms/name-form";
-import ContactForm from "../../components/forms/contact-form";
-import NotificationForm from "../../components/forms/notification-form";
-import Summary from "../../components/forms/summary";
+import NameForm from "../../components/forms/form-slices/name-form";
+import ContactForm from "../../components/forms/form-slices/contact-form";
+import NotificationForm from "../../components/forms/form-slices/notification-form";
+import Summary from "../../components/forms/form-slices/summary";
 import { userSchema, type UserInput, userDefaults } from "./schema/user-schema";
 import useValidateFormSlice from "../../hooks/use-validate-form-slice";
-import { nameSchema } from "../../components/forms/name-form/schema/name-schema";
-import { contactSchema } from "../../components/forms/contact-form/schema/contact-schema";
-import { notificationSchema } from "../../components/forms/notification-form/schema/notification-schema";
+import { nameSchema } from "../../components/forms/form-slices/name-form/schema/name-schema";
+import { contactSchema } from "../../components/forms/form-slices/contact-form/schema/contact-schema";
+import { notificationSchema } from "../../components/forms/form-slices/notification-form/schema/notification-schema";
 
 function UserWiz() {
   const [wizStage, setWizStage] = useState(0);
@@ -217,7 +217,7 @@ function UserWiz() {
         <Button onClick={handleReset}>reset form</Button>
         <Button onClick={handleSubmit}>submit</Button>
       </Box>
-      <p>{JSON.stringify(formMethods.formState.errors)}</p>
+      <p>{JSON.stringify(formMethods.formState)}</p>
     </>
   );
 }
