@@ -45,10 +45,17 @@ function OldUserWizModalContent() {
 }
 
 function UserWizModalContent() {
+  const { close } = useModalContext();
+
+  function onSubmit() {
+    alert("submit from userwiz, BYEBYE");
+    close();
+  }
+
   return (
     <>
       <ModalHead title="create new user" />
-      <UserWiz />
+      <UserWiz onSubmit={onSubmit} />
     </>
   );
 }

@@ -40,7 +40,6 @@ function UserWiz(props: UserWizProps) {
     if (props.onSubmit) {
       props.onSubmit();
     }
-    alert("TODO");
   }
 
   return (
