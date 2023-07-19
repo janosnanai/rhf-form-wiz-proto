@@ -7,7 +7,7 @@ import { type ZodSchema } from "zod";
 import { useFormContext } from "react-hook-form";
 
 import { useWizContext } from "./context/wiz-context";
-import getZodKeys from "../../utils/get-zod-keys";
+import getZodKeys from "../../utils/get-zod-leaf-keys";
 
 function FormWizActions() {
   const { activeStep, steps, back, next } = useWizContext();

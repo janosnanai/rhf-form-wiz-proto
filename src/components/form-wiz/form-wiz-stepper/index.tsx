@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { type ZodSchema } from "zod";
 
 import { useWizContext } from "../context/wiz-context";
-import getZodKeys from "../../../utils/get-zod-keys";
+import getZodLeafKeys from "../../../utils/get-zod-leaf-keys";
 import FormWizStepLabel from "./form-wiz-step-label";
 
 function FormWizStepper() {
@@ -12,9 +12,17 @@ function FormWizStepper() {
 
   function handleStepTo(update: number) {
     if (activeStep === update) return;
-    const fieldKeys = steps[activeStep].schema
-      ? getZodKeys(steps[activeStep].schema as ZodSchema)
-      : null;
+
+    let fieldKeys: string[] | null = null;
+
+    if (steps[activeStep].schema) {
+      fieldKeys = getZodLeafKeys(steps[activeStep].schema as ZodSchema);
+      const { nesting } = steps[activeStep];
+      if (nesting && nesting?.length) {
+        fieldKeys = fieldKeys.map((k) => nesting.join(".") + "." + k);
+      }
+    }
+
     if (fieldKeys) {
       trigger(fieldKeys);
     }

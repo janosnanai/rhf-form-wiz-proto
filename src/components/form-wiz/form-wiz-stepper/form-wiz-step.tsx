@@ -7,7 +7,7 @@ import { useFormContext } from "react-hook-form";
 import { useState, useEffect } from "react";
 
 import { type WizStep, useWizContext } from "../context/wiz-context";
-import getZodKeys from "../../../utils/get-zod-keys";
+import getZodKeys from "../../../utils/get-zod-leaf-keys";
 
 interface FormWizStepProps {
   step: WizStep;
